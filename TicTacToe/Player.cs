@@ -23,9 +23,15 @@ namespace TicTacToe
                     int endOfFirstCord = input.IndexOf(' ');
                     x = Convert.ToInt32(input.Substring(0, endOfFirstCord));
                     y = Convert.ToInt32(input.Substring(endOfFirstCord+1, input.Length - (endOfFirstCord+ 1)));
-                    Console.WriteLine(x + " " + y);
-                    grids[x, y] = sign;
-                    moveMade = true;
+                    if (grids[x, y] == ' ')
+                    {
+                        grids[x, y] = sign;
+                        moveMade = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Grid occupied!");
+                    }
                 }
                 catch (Exception e)
                 {
