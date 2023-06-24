@@ -16,11 +16,20 @@ namespace TicTacToe
             grids = new char[size, size];
             this.inRowToWin = inRowToWin;
             this.size = size;
+
+            for (int i = 0; i < size; i++)
+            {
+                for (int j = 0; j < size; j++)
+                {
+                    grids[i, j] = ' ';
+                }
+            }
             
             //TODO
             switch (level)
             {
                 case 0:
+                    ai = new EasyAI('X');
                     break;
                 case 1:
                     break;
@@ -66,14 +75,7 @@ namespace TicTacToe
                 if (temp == ' ') free++;
             }
 
-            if (free == 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return free == 0;
         }
 
         void startGame()
@@ -82,9 +84,19 @@ namespace TicTacToe
             while (!isOver())
             {
                 printMap();
-                Thread.Sleep(1000);
+                player.makeMove(grids);
+                ai.makeMove(grids);
+                //Thread.Sleep(1000);
                 Console.Clear();
             }
+            printMap();
+            Console.Write("The game ended in " + gameResult());
+            Thread.Sleep(2000);
+        }
+
+        string gameResult()
+        {
+            return "NULL";
         }
     }
 }

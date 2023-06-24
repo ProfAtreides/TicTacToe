@@ -12,10 +12,19 @@ namespace TicTacToe
 
         public override void makeMove(char[,] grids)
         {
-            int max = grids.Length;
-            int x = new Random(0).Next(0,max);
-            int y = new Random(0).Next(0,max);
-            grids[x, y] = Sign;
+            int max = Convert.ToInt32(Math.Sqrt(grids.Length));
+            bool madeMove = false;
+            while (!madeMove)
+            {
+                int x = new Random().Next(0,max);
+                int y = new Random().Next(0,max);
+                if (grids[x, y] == ' ')
+                {
+                    grids[x, y] = Sign;
+                    madeMove = true;
+                }
+            }
+            
         }
     }
 }

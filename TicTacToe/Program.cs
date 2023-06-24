@@ -4,7 +4,7 @@
     {
         public static void Main(string[] args)
         {
-            Game test =  new Game(12,3,1,'O');
+            Game test =  new Game(4,3,0,'O');
         }
     }
 }
