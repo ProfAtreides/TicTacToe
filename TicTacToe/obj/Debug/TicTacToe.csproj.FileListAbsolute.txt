@@ -1,0 +1,7 @@
+U:\Project\DotNet\Pamsi\TicTacToe\TicTacToe\bin\Debug\TicTacToe.exe
+U:\Project\DotNet\Pamsi\TicTacToe\TicTacToe\bin\Debug\TicTacToe.pdb
+U:\Project\DotNet\Pamsi\TicTacToe\TicTacToe\obj\Debug\TicTacToe.csproj.AssemblyReference.cache
+U:\Project\DotNet\Pamsi\TicTacToe\TicTacToe\obj\Debug\TicTacToe.csproj.SuggestedBindingRedirects.cache
+U:\Project\DotNet\Pamsi\TicTacToe\TicTacToe\obj\Debug\TicTacToe.csproj.CoreCompileInputs.cache
+U:\Project\DotNet\Pamsi\TicTacToe\TicTacToe\obj\Debug\TicTacToe.exe
+U:\Project\DotNet\Pamsi\TicTacToe\TicTacToe\obj\Debug\TicTacToe.pdb
