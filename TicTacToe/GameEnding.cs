@@ -1,164 +1,186 @@
-﻿namespace TicTacToe
+﻿using System.Linq;
+using System.Runtime.InteropServices;
+
+namespace TicTacToe
 {
     public class GameEnding
-    { 
-        static private int size, inRowToWin;
-        static private char[,] grids;
+    {
+        static private int  inRowToWin;
+        static private Board board;
 
-        static public void setParameters(int size, int inRowToWin, char[,] grids)
+        static public void SetParameters(Board board,int inRowToWin)
         {
-            GameEnding.size = size;
+            GameEnding.board = board;
             GameEnding.inRowToWin = inRowToWin;
-            GameEnding.grids = grids;
-
         }
-        
-       static public bool isOver()
+
+        static public bool isDraw()
         {
-            int free = 0;
-
-            if (checkVertical() != 'c') return true;
-            if (checkHortizontal() != 'c') return true;
-            if (checkLRDiagonal() != 'c') return true;
-            if (checkRLDiagonal() != 'c') return true;
-
-            foreach (var temp in grids)
+            foreach (var grid in board.Grids)
             {
-                if (temp == ' ') free++;
+                if (grid == Sign.Empty) return false;
             }
-
-            if (free > 0) return false;
 
             return true;
         }
+        static public bool IsOver()
+        {
+            int free = 0;
 
-       static char checkVertical()
+            if (CheckVertical() != Sign.Empty) return true;
+            if (CheckHortizontal() != Sign.Empty) return true;
+            if (CheckLRDiagonal() != Sign.Empty) return true;
+            if (CheckRLDiagonal() != Sign.Empty) return true;
+            if (isDraw()) return true;
+            return false;
+        }
+
+        static Sign CheckVertical()
         {
             int winningRow = 0;
 
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < board.Size; i++)
             {
-                char lastSign = grids[0, i];
-                for (int j = 0; j < size; j++)
+                Sign lastSign = board.Grids[0, i];
+                winningRow = 0;
+                for (int j = 0; j < board.Size; j++)
                 {
-                    if (lastSign == grids[j, i] && lastSign != ' ')
+                    if (lastSign == board.Grids[j, i] && lastSign != Sign.Empty)
                     {
                         winningRow++;
                     }
-                    else if (grids[j,i] != ' ')
+                    else if (board.Grids[j, i] != Sign.Empty)
                     {
-                        lastSign = grids[j, i];
+                        lastSign = board.Grids[j, i];
                         winningRow = 1;
                     }
                     else
                     {
-                        lastSign = ' ';
+                        lastSign = Sign.Empty;
                         winningRow = 0;
                     }
+
                     if (winningRow == inRowToWin) return lastSign;
                 }
             }
 
-            return 'c';
+            return Sign.Empty;
         }
 
-       static char checkHortizontal()
+        static Sign CheckHortizontal()
         {
             int winningRow = 0;
 
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < board.Size; i++)
             {
-                char lastSign = grids[i, 0];
-                for (int j = 0; j < size; j++)
+                Sign lastSign = board.Grids[i, 0];
+                winningRow = 0;
+                for (int j = 0; j < board.Size; j++)
                 {
-                    if (lastSign == grids[i, j] && lastSign != ' ')
+                    if (lastSign == board.Grids[i, j] && lastSign != Sign.Empty)
                     {
                         winningRow++;
                     }
-                    else if (grids[i,j] != ' ')
+                    else if (board.Grids[i, j] != Sign.Empty)
                     {
-                        lastSign = grids[i, j];
+                        lastSign = board.Grids[i, j];
                         winningRow = 1;
                     }
                     else
                     {
-                        lastSign = ' ';
+                        lastSign = Sign.Empty;
                         winningRow = 0;
                     }
+
                     if (winningRow == inRowToWin) return lastSign;
-                    
                 }
             }
 
-            return 'c';
+            return Sign.Empty;
         }
 
-       static char checkLRDiagonal()
+        static Sign CheckLRDiagonal()
         {
             int winningRow = 0;
 
-            for (int i = 0; i < size - inRowToWin; i++)
+            for (int i = 0; i < board.Size - inRowToWin + 1; i++)
             {
-                char lastSign = grids[i, 0];
-                for (int j = 0, z = i; j < size; j++, z++)
+                Sign lastSign = board.Grids[i, 0];
+                winningRow = 0;
+                for (int j = 0, z = i; j < board.Size; j++, z++)
                 {
-                    if (lastSign == grids[z, j] && lastSign != ' ')
+                    if (z >= board.Size) break;
+                    if (lastSign == board.Grids[z, j] && lastSign != Sign.Empty)
                     {
                         winningRow++;
                     }
-                    else if (grids[z,j] != ' ')
+                    else if (board.Grids[z, j] != Sign.Empty)
                     {
-                        lastSign = grids[z, j];
+                        lastSign = board.Grids[z, j];
                         winningRow = 1;
                     }
                     else
                     {
-                        lastSign = ' ';
+                        lastSign = Sign.Empty;
                         winningRow = 0;
                     }
+
                     if (winningRow == inRowToWin) return lastSign;
                 }
             }
 
-            return 'c';
+            return Sign.Empty;
         }
 
-       static char checkRLDiagonal()
+        static Sign CheckRLDiagonal()
         {
             int winningRow = 0;
 
-            for (int i = 0; i < size - inRowToWin; i++)
+            for (int i = 0; i < board.Size - inRowToWin + 1; i++)
             {
-                char lastSign = grids[i, 0];
-                for (int j = size - 1, z = i; j > 0; j--, z++)
+                Sign lastSign = board.Grids[i, 0];
+                winningRow = 0;
+                for (int j = board.Size - 1, z = i; j > 0; j--, z++)
                 {
-                    if (lastSign == grids[z, j] && lastSign != ' ')
+                    if (z >= board.Size) break;
+                    if (lastSign == board.Grids[z, j] && lastSign != Sign.Empty)
                     {
                         winningRow++;
                     }
-                    else if (grids[z,j] != ' ')
+                    else if (board.Grids[z, j] != Sign.Empty)
                     {
-                        lastSign = grids[z, j];
+                        lastSign = board.Grids[z, j];
                         winningRow = 1;
                     }
                     else
                     {
-                        lastSign = ' ';
+                        lastSign = Sign.Empty;
                         winningRow = 0;
                     }
+
                     if (winningRow == inRowToWin) return lastSign;
                 }
             }
 
-            return 'c';
+            return Sign.Empty;
         }
-
-       static public string gameResult()
+        
+        
+        public static Sign CharResult()
         {
-            if (checkVertical() != 'c') return (checkVertical() + " V wins.");
-            if (checkHortizontal() != 'c') return (checkHortizontal() + " H wins.");
-            if (checkLRDiagonal() != 'c') return (checkLRDiagonal() + " L wins.");
-            if (checkRLDiagonal() != 'c') return (checkRLDiagonal() + " R wins.");
+            if (CheckVertical() != Sign.Empty) return CheckVertical();
+            if (CheckHortizontal() != Sign.Empty) return CheckHortizontal() ;
+            if (CheckLRDiagonal() != Sign.Empty) return CheckLRDiagonal();
+            if (CheckRLDiagonal() != Sign.Empty) return CheckRLDiagonal() ;
+            return Sign.Empty;
+        }
+        
+        public static string GameResult()
+        {
+            if (CheckVertical() != Sign.Empty) return (CheckVertical() + " V wins.");
+            if (CheckHortizontal() != Sign.Empty) return (CheckHortizontal() + " H wins.");
+            if (CheckLRDiagonal() != Sign.Empty) return (CheckLRDiagonal() + " L wins.");
+            if (CheckRLDiagonal() != Sign.Empty) return (CheckRLDiagonal() + " R wins.");
             return "draw.";
         }
     }

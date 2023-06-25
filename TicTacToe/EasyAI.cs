@@ -5,26 +5,25 @@ namespace TicTacToe
 {
     public class EasyAI : AI
     {
-        public EasyAI(char sign)
+        public EasyAI(Sign sign)
         {
             Sign = sign;
         }
 
-        public override void makeMove(char[,] grids)
+        public override void MakeMove(Board board)
         {
-            int max = Convert.ToInt32(Math.Sqrt(grids.Length));
+            int max = board.Size;
             bool madeMove = false;
             while (!madeMove)
             {
-                int x = new Random().Next(0,max);
-                int y = new Random().Next(0,max);
-                if (grids[x, y] == ' ')
+                int x = new Random().Next(0, max);
+                int y = new Random().Next(0, max);
+                if (board.Grids[x, y] == Sign.Empty)
                 {
-                    grids[x, y] = Sign;
+                    board.Grids[x, y] = Sign;
                     madeMove = true;
                 }
             }
-            
         }
     }
 }

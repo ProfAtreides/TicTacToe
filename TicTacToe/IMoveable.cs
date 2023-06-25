@@ -2,6 +2,6 @@
 {
     public interface IMoveable
     {
-        public void makeMove(char[,] grids);
+        public void MakeMove(Board board);
     }
 }

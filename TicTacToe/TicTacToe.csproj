@@ -41,14 +41,20 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="AdvancedAI.cs" />
+        <Compile Include="Board.cs" />
         <Compile Include="EasyAI.cs" />
         <Compile Include="Game.cs" />
         <Compile Include="AI.cs" />
         <Compile Include="GameEnding.cs" />
+        <Compile Include="HardAI.cs" />
         <Compile Include="IMoveable.cs" />
+        <Compile Include="ImpossibleAI.cs" />
+        <Compile Include="Difficulty.cs" />
+        <Compile Include="MediumAI.cs" />
         <Compile Include="Player.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="Sign.cs" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

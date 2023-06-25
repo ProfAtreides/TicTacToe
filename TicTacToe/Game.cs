@@ -5,65 +5,61 @@ namespace TicTacToe
 {
     public class Game
     {
-        private int size;
+        private Board board;
         private int inRowToWin;
-        private char[,] grids;
         private IMoveable ai, player;
 
-        public Game(int size, int inRowToWin, int level, char playerSign)
+        public Game(int size, int inRowToWin, Difficulty difficulty, Sign playerSign)
         {
+            this.board = new Board(size);
             player = new Player(playerSign);
-            grids = new char[size, size];
             this.inRowToWin = inRowToWin;
-            this.size = size;
 
-            for (int i = 0; i < size; i++)
-            {
-                for (int j = 0; j < size; j++)
-                {
-                    grids[i, j] = ' ';
-                }
-            }
+            Sign aiSign;
+            if (playerSign == Sign.Circle) aiSign = Sign.Cross;
+            else aiSign = Sign.Circle;
 
-            GameEnding.setParameters(size,inRowToWin,grids);
-            
-            //TODO
-            switch (level)
+            GameEnding.SetParameters(board, inRowToWin);
+
+            switch (difficulty)
             {
-                case 0:
-                    ai = new EasyAI('X');
+                case Difficulty.Easy:
+                    ai = new EasyAI(aiSign);
                     break;
-                case 1:
+                case Difficulty.Medium:
+                    ai = new MediumAI(aiSign);
                     break;
-                case 2:
+                case Difficulty.Hard:
+                    ai = new HardAI(aiSign);
                     break;
-                case 3:
+                case Difficulty.Impossible:
+                    ai = new ImpossibleAI(aiSign);
                     break;
                 default:
                     break;
             }
 
-            startGame();
+            StartGame();
         }
 
-        void printMap()
+        void PrintMap()
         {
-            for (int j = 0; j < size * 2 + 1; j++)
+            for (int j = 0; j < board.Size * 2 + 1; j++)
             {
                 System.Console.Write("-");
             }
 
             System.Console.Write("\n");
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < board.Size; i++)
             {
                 System.Console.Write('|');
-                for (int j = 0; j < size; j++)
+                for (int j = 0; j < board.Size; j++)
                 {
-                    System.Console.Write(grids[i, j] + "|");
+                    System.Console.Write((char)board.Grids[i, j] + "|");
                 }
 
                 System.Console.Write("\n");
-                for (int j = 0; j < size * 2 + 1; j++)
+                for (int j = 0; j < board.Size * 2 + 1; j++)
                 {
                     System.Console.Write("-");
                 }
@@ -72,19 +68,21 @@ namespace TicTacToe
             }
         }
 
-        void startGame()
+        void StartGame()
         {
             char currentMove = 'X';
-            while (!GameEnding.isOver())
+            while (!GameEnding.IsOver())
             {
-                printMap();
-                player.makeMove(grids);
-                ai.makeMove(grids);
+                PrintMap();
+                player.MakeMove(board);
+                if (GameEnding.IsOver()) break;
+                ai.MakeMove(board);
                 Console.Clear();
             }
 
-            printMap();
-            Console.Write("The game ended in " + GameEnding.gameResult());
+            Console.Clear();
+            PrintMap();
+            Console.Write("The game ended in " + GameEnding.GameResult());
             Thread.Sleep(2000);
         }
     }

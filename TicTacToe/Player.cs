@@ -4,14 +4,14 @@ namespace TicTacToe
 {
     public class Player : IMoveable
     {
-        private char sign;
+        private Sign sign;
 
-        public Player(char sign)
+        public Player(Sign sign)
         {
             this.sign = sign;
         }
 
-        public void makeMove(char[,] grids)
+        public void MakeMove(Board board)
         {
             bool moveMade = false;
             while (!moveMade)
@@ -22,10 +22,10 @@ namespace TicTacToe
                     string input = Console.ReadLine();
                     int endOfFirstCord = input.IndexOf(' ');
                     x = Convert.ToInt32(input.Substring(0, endOfFirstCord));
-                    y = Convert.ToInt32(input.Substring(endOfFirstCord+1, input.Length - (endOfFirstCord+ 1)));
-                    if (grids[x, y] == ' ')
+                    y = Convert.ToInt32(input.Substring(endOfFirstCord + 1, input.Length - (endOfFirstCord + 1)));
+                    if (board.Grids[x, y] == Sign.Empty)
                     {
-                        grids[x, y] = sign;
+                        board.Grids[x, y] = sign;
                         moveMade = true;
                     }
                     else
