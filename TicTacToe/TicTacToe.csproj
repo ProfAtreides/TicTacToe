@@ -40,9 +40,11 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="AdvancedAI.cs" />
         <Compile Include="EasyAI.cs" />
         <Compile Include="Game.cs" />
         <Compile Include="AI.cs" />
+        <Compile Include="GameEnding.cs" />
         <Compile Include="IMoveable.cs" />
         <Compile Include="Player.cs" />
         <Compile Include="Program.cs" />
